@@ -210,6 +210,109 @@
   position: relative;
   width: 100%;
 }
+
+/* ---------- RESPONSIVENESS ---------- */
+
+/* Tablets (≤ 900px) */
+@media (max-width: 900px) {
+  header h1 {
+    font-size: 2.2em;
+  }
+
+  .container {
+    padding: 20px;
+    margin: 20px;
+  }
+
+  textarea {
+    height: 110px;
+    font-size: 0.95em;
+  }
+
+  button {
+    font-size: 1.05em;
+    padding: 12px 25px;
+  }
+}
+
+/* Phones (≤ 600px) */
+@media (max-width: 600px) {
+  header {
+    padding: 30px 15px;
+  }
+
+  header h1 {
+    font-size: 1.8em;
+  }
+
+  header p {
+    font-size: 1em;
+  }
+
+  .container {
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  textarea {
+    height: 100px;
+    font-size: 0.9em;
+    padding: 12px;
+  }
+
+  select {
+    font-size: 1em;
+    padding: 12px 16px;
+  }
+
+  button {
+    width: 100%;              /* ✅ full-width on small screens */
+    font-size: 1em;
+    padding: 12px;
+  }
+
+  .result {
+    font-size: 1em;
+    padding: 15px;
+  }
+
+  /* Mic button smaller & inside textarea neatly */
+  .mic-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2em;
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .listening-label {
+    right: 65px;
+    bottom: 28px;
+    font-size: 0.8em;
+    padding: 4px 8px;
+  }
+}
+
+/* Very Small Phones (≤ 400px) */
+@media (max-width: 400px) {
+  header h1 {
+    font-size: 1.5em;
+  }
+
+  textarea {
+    height: 90px;
+    font-size: 0.85em;
+  }
+
+  .mic-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1em;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -283,3 +386,4 @@ if (SpeechRecognition) {
   </footer>
 </body>
 </html>
+
