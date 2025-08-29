@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
 from translator import translate
 from markupsafe import Markup
+import os
+from dotenv import load_dotenv
+import google.generativeai as genai
 
 app = Flask(__name__)
 
@@ -40,3 +43,4 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
