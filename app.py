@@ -1,11 +1,10 @@
 from flask import Flask, render_template, request
-from translator import translate
 from markupsafe import Markup
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 
-# Load environment variables
+# Load environment variables (for local dev; on Render, set them in Dashboard)
 load_dotenv()
 
 # Configure Gemini
@@ -19,6 +18,7 @@ else:
 app = Flask(__name__)
 
 def translate(text, target_language="English"):
+    """Translate text into the target language using Gemini API (or mock)."""
     if not model:
         return f"MOCK: {text} -> ({target_language})"
 
@@ -30,7 +30,7 @@ def translate(text, target_language="English"):
     response = model.generate_content(prompt)
     return response.text
 
-# List of popular languages (you can add/remove)
+# List of popular languages
 LANGUAGES = [
     "English", "Yoruba", "Hausa", "Igbo", "French", "Spanish", "Portuguese",
     "Swahili", "Arabic", "German", "Chinese", "Japanese", "Korean", "Russian",
@@ -38,7 +38,7 @@ LANGUAGES = [
 ]
 
 def format_response(response_text):
-    # Split into lines where a star (*) starts an item
+    """Format Gemini output into HTML if it contains bullet/star lists."""
     lines = response_text.split("*")
     formatted_items = []
 
@@ -60,11 +60,11 @@ def home():
         target_language = request.form["target_language"]
 
         raw_result = translate(text, target_language)
-        result = format_response(raw_result)   # ✅ Apply formatting here
+        result = format_response(raw_result)
 
     return render_template("index.html", result=result, languages=LANGUAGES)
 
 if __name__ == "__main__":
-    app.run(debug=True)
-
-
+    # ✅ Important for Render: bind to 0.0.0.0 and use provided PORT
+    port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
