@@ -352,14 +352,18 @@
   </div>
 
   <script>
-  const recordBtn = document.getElementById("recordBtn");
+ const recordBtn = document.getElementById("recordBtn");
 const textarea = document.querySelector("textarea[name='text']");
 const listeningLabel = document.getElementById("listeningLabel");
 
-if (SpeechRecognition) {
-  const recognition = new SpeechRecognition();
+let SpeechRecognitionClass =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognitionClass) {
+  const recognition = new SpeechRecognitionClass();
   recognition.lang = "en-US";
   recognition.continuous = false;
+  recognition.interimResults = false;
 
   recordBtn.addEventListener("click", () => {
     recognition.start();
@@ -372,13 +376,18 @@ if (SpeechRecognition) {
   };
 
   recognition.onerror = (event) => {
+    console.error("Speech recognition error:", event.error);
     alert("Speech recognition error: " + event.error);
+    listeningLabel.style.display = "none";
   };
 
   recognition.onend = () => {
     listeningLabel.style.display = "none"; // hide label
   };
+} else {
+  alert("Your browser does not support Speech Recognition API.");
 }
+
 </script>
 
   <footer>
@@ -386,6 +395,7 @@ if (SpeechRecognition) {
   </footer>
 </body>
 </html>
+
 
 
 
